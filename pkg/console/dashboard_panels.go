@@ -503,6 +503,7 @@ func nodeIsPresent() bool {
 		out      []byte
 		err      error
 	)
+
         // find node hostname
         hcmd = `hostnamectl --static | tr -d '\r\n'`
         out, err = exec.Command("/bin/sh", "-c", hcmd).Output()
@@ -511,6 +512,7 @@ func nodeIsPresent() bool {
 		logrus.Errorf("failed to get hostname: %v", err)
 		return false
 	}
+
 	kcmd := fmt.Sprintf("kubectl get no %s", hostname)
 	cmd := exec.Command("/bin/sh", "-c", kcmd)
 	cmd.Env = os.Environ()
