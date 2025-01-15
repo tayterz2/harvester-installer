@@ -503,7 +503,6 @@ func nodeIsPresent() bool {
 		out      []byte
 		err      error
 	)
-
         // find node hostname
         hcmd = `hostnamectl --static | tr -d '\r\n'`
         out, err = exec.Command("/bin/sh", "-c", hcmd).Output()
