@@ -26,26 +26,17 @@ clear_disk_label()
     #     }
     #   ]
     # }
-    if [ "$HARVESTER_WIPE_DISKS" == "true" ]; then
-        echo "wiping all disks"
-        for disk in $(lsblk -d -n -J -o NAME,TYPE | jq -r '.blockdevices[] | select(.type == "disk") | .name')
-        do
-            sgdisk -Z /dev/$disk
-            partprobe -s /dev/$disk
-        done
-    else
-        # Clear the label of partitions that has $DATA_DISK_FSLABEL to prevent misidentification
-        # Also, while yip is partitioning the disk, if it sees the LABEL to be used exists,
-        # it won't create the partition. So it's necessary to clear the label
-        for part in $(blkid -t LABEL="$DATA_DISK_FSLABEL" -o device); do
-            echo "Remove filesystem label from $part"
-            # Run this tune2fs twice because sometimes the first run would show "Recovering journal"
-            # and label is not modified
-            tune2fs -L "" $part > /dev/null
-            tune2fs -L "" $part > /dev/null
-        done
-        udevadm settle
-    fi
+    # Clear the label of partitions that has $DATA_DISK_FSLABEL to prevent misidentification
+    # Also, while yip is partitioning the disk, if it sees the LABEL to be used exists,
+    # it won't create the partition. So it's necessary to clear the label
+    for part in $(blkid -t LABEL="$DATA_DISK_FSLABEL" -o device); do
+        echo "Remove filesystem label from $part"
+        # Run this tune2fs twice because sometimes the first run would show "Recovering journal"
+        # and label is not modified
+        tune2fs -L "" $part > /dev/null
+        tune2fs -L "" $part > /dev/null
+    done
+    udevadm settle
 }
 
 umount_target() {
@@ -163,6 +154,14 @@ do_mount()
     mount ${PERSISTENT} ${TARGET}/usr/local
 }
 
+sparsify_passive_img()
+{
+    # See https://github.com/harvester/harvester/issues/7518
+    echo "Ensuring passive.img is sparse..."
+    echo "  was: $(du -h ${STATEDIR}/cOS/passive.img)"
+    fallocate --dig-holes ${STATEDIR}/cOS/passive.img
+    echo "  now: $(du -h ${STATEDIR}/cOS/passive.img)"
+}
 
 preload_rke2_images()
 {
@@ -537,6 +536,7 @@ do_data_disk_format
 # Preload images
 do_detect
 do_mount
+sparsify_passive_img
 get_iso  # For PXE Boot
 save_configs
 save_wicked_state
