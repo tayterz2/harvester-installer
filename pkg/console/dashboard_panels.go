@@ -495,12 +495,6 @@ func isPodReady(namespace string, labelSelectors ...string) bool {
 }
 
 func nodeIsPresent() bool {
-	var (
-		hostname string
-		err      error
-	)
-
-        // find node hostname
 	hostname, err = GetFullHostname()
 	if err != nil {
 		logrus.Errorf("failed to get hostname: %v", err)
