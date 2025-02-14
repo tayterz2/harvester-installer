@@ -1098,3 +1098,24 @@ func identifyUniqueDisks(output []byte) ([]string, error) {
 
 	return returnDisks, nil
 }
+
+// Get fully-qualified Hostname
+func GetFullHostname() (string, error) {
+	var (
+		hcmd      string
+		hostname string
+		out      []byte
+		err      error
+	)
+
+	// find node hostname
+	hcmd = `hostnamectl --static | tr -d '\r\n'`
+	out, err = exec.Command("/bin/sh", "-c", hcmd).Output()
+	if err != nil {
+		logrus.Errorf("failed to get hostname: %v", err)
+		return "", err
+	}
+
+	hostname = string(out)
+	return hostname, nil
+}
