@@ -2929,7 +2929,7 @@ func configureInstallModeDHCP(c *Console) {
 
 func checkDHCPHostname(c *config.HarvesterConfig, generate bool) {
 	if c.Hostname == "" {
-		hostname, err := os.Hostname()
+		hostname, err := GetFullHostname()
 		if err != nil {
 			logrus.Errorf("error fetching hostname from underlying OS: %v", err)
 		}
