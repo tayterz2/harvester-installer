@@ -351,9 +351,7 @@ func getNodeInfo() string {
 	)
 
 	// find node hostname
-	cmd = `hostnamectl --static | tr -d '\r\n'`
-	out, err = exec.Command("/bin/sh", "-c", cmd).Output()
-	hostname = string(out)
+	hostname, err = GetFullHostname()
 	if err != nil || hostname == "" {
 		logrus.Warnf("node didn't have a hostname")
 		hostname = ""
@@ -497,17 +495,7 @@ func isPodReady(namespace string, labelSelectors ...string) bool {
 }
 
 func nodeIsPresent() bool {
-	var (
-		hcmd      string
-		hostname string
-		out      []byte
-		err      error
-	)
-
-        // find node hostname
-        hcmd = `hostnamectl --static | tr -d '\r\n'`
-        out, err = exec.Command("/bin/sh", "-c", hcmd).Output()
-        hostname = string(out)
+	hostname, err := GetFullHostname()
 	if err != nil {
 		logrus.Errorf("failed to get hostname: %v", err)
 		return false
