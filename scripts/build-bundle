@@ -251,8 +251,7 @@ add_addon_images_to_list
 cat ${SCRIPTS_DIR}/images/harvester-additional-images.txt >> ${image_list_file}
 
 # get longhorn image list
-#longhorn_version=v$(ls ${harvester_chart_path}/charts | grep longhorn| sed -e "s/^longhorn-//" -e "s/.tgz$//")
-longhorn_version=v1.8.1-rc1
+longhorn_version=v$(ls ${harvester_chart_path}/charts | grep longhorn| sed -e "s/^longhorn-//" -e "s/.tgz$//")
 longhorn_image_url=https://raw.githubusercontent.com/longhorn/longhorn/${longhorn_version}/deploy/longhorn-images.txt
 curl ${longhorn_image_url}>>${image_list_file}
 # longhornio/openshift-origin-oauth-proxy does have multi-arch images and Harvester doesn't need it
