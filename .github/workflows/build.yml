@@ -35,7 +35,7 @@ jobs:
 
     # Build ISO
     - name: Run make ci
-      run: make ci
+      run: USE_LOCAL_IMAGES=true make ci
 
     # Below is essentially duplicated from the main Harvester repo's
     # .github/workflows/build.yml, except we're only publishing branches,
