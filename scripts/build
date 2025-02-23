@@ -30,7 +30,7 @@ fi
 addons_path=../addons
 if [ ! -d ${addons_path} ];then
     echo "No existing addons source. Pulling..."
-    git clone --branch main --single-branch --depth 1 https://github.com/tayterz2/addons.git ../addons
+    git clone --branch main --single-branch --depth 1 https://github.com/harvester/addons.git ../addons
 fi
 
 source ${SCRIPTS_DIR}/version-harvester $harvester_path
