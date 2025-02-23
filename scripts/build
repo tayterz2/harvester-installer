@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-TOP_DIR=/home/github/actions-runner/_work/harvester-installer/harvester-installer
+TOP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
+echo TOP_DIR = $TOP_DIR
 SCRIPTS_DIR="${TOP_DIR}/scripts"
 PACKAGE_HARVESTER_OS_DIR="${TOP_DIR}/package/harvester-os"
 
