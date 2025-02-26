@@ -26,7 +26,7 @@ jobs:
     # hdd=50 is somewhat arbitrary here, but seems to give a
     # 77G disk, which is sufficient for ISO builds.
     # The VM runners are named "x64", not "amd64" like other docker things.
-    runs-on: codebuild-HarvesterAutoInstaller-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-HarvesterAutoInstaller2-${{ github.run_id }}-${{ github.run_attempt }}
     permissions:
       contents: read
       id-token: write # for reading credential https://github.com/rancher-eio/read-vault-secrets
