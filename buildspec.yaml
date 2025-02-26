@@ -8,5 +8,6 @@ phases:
       
 artifacts:
   files:
-    - 'dist/artifacts/*amd64.iso'
-  name: isos/harvester-autoinstall-$(git rev-parse --short HEAD).iso
+    - 'dist/artifacts/*'
+  name: isos/harvester-installer-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)
+  discard-paths: yes
