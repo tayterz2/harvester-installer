@@ -1,0 +1,7 @@
+#supposedly this file is ignored when using aws runners...
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "this didn't get ignored, liars..."
