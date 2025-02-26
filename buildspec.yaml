@@ -4,4 +4,9 @@ version: 0.2
 phases:
   build:
     commands:
-      - echo "this didn't get ignored, liars..."
+      - make ci
+      
+artifacts:
+  files:
+    - 'dist/artifacts/*amd64.iso'
+  name: isos/harvester-autoinstall-$(git rev-parse --short HEAD).iso
