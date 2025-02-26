@@ -1,0 +1,13 @@
+#supposedly this file is ignored when using aws runners...
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - make ci
+      
+artifacts:
+  files:
+    - 'dist/artifacts/*'
+  name: isos/harvester-installer-$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)
+  discard-paths: yes
